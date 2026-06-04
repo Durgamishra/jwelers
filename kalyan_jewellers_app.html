@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalyan Jewellers - Legacy of Trust</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#FFFBEB',
+                            100: '#FEF3C7',
+                            200: '#FDE68A',
+                            300: '#FCD34D',
+                            400: '#FBBF24',
+                            500: '#D4AF37',
+                            600: '#B8860B',
+                            700: '#996515',
+                            800: '#7C5803',
+                            900: '#5C4402',
+                        },
+                        maroon: {
+                            50: '#FDF2F2',
+                            100: '#FCE7E7',
+                            200: '#F9CFCF',
+                            300: '#F4A8A8',
+                            400: '#EC7878',
+                            500: '#8B1538',
+                            600: '#6B1029',
+                            700: '#4A0B1C',
+                            800: '#3A0916',
+                            900: '#2A0610',
+                        }
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'cormorant': ['Cormorant Garamond', 'serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { scroll-behavior: smooth; }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #FCD34D 25%, #D4AF37 50%, #B8860B 75%, #D4AF37 100%);
+            background-size: 200% 200%;
+            animation: shimmer 3s ease infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #D4AF37, #FCD34D, #B8860B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .card-hover {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(212, 175, 55, 0.25);
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .ornate-border {
+            position: relative;
+        }
+        .ornate-border::before,
+        .ornate-border::after {
+            content: '❦';
+            position: absolute;
+            color: #D4AF37;
+            font-size: 1.5rem;
+        }
+        .ornate-border::before { left: -2rem; top: 50%; transform: translateY(-50%); }
+        .ornate-border::after { right: -2rem; top: 50%; transform: translateY(-50%); }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .cursor-glow {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(212,175,55,0.6) 0%, transparent 70%);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+        }
+
+        .product-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .product-card img {
+            transition: transform 0.7s ease;
+        }
+        .product-card:hover img {
+            transform: scale(1.1);
+        }
+        .product-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+        .product-card:hover .product-overlay {
+            opacity: 1;
+        }
+
+        .count-up {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 30s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .loader {
+            border: 3px solid rgba(212,175,55,0.1);
+            border-top: 3px solid #D4AF37;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tab-active {
+            border-bottom: 2px solid #D4AF37;
+            color: #D4AF37;
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, #D4AF37, #B8860B);
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 font-inter overflow-x-hidden">
+    <!-- Custom Cursor -->
+    <div class="cursor-glow hidden md:block" id="cursor"></div>
+
+    <!-- Loading Screen -->
+    <div id="loader" class="fixed inset-0 bg-stone-900 z-50 flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="loader mb-6"></div>
+        <h2 class="font-playfair text-2xl text-gold-400 tracking-widest">KALYAN</h2>
+        <p class="text-stone-400 text-sm mt-2 tracking-widest">JEWELLERS</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-40 transition-all duration-500 py-4">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center">
+                    <i class="fas fa-gem text-white text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-playfair text-2xl font-bold text-white tracking-wide">KALYAN</h1>
+                    <p class="text-xs text-gold-300 tracking-[0.3em]">JEWELLERS</p>
+                </div>
+            </div>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#collections" class="text-white/80 hover:text-gold-400 transition-colors text-sm tracking-wider uppercase">Collections</a>
+                <a href="#muhurat" class="text-white/80 hover:text-gold-400 transition-colors text-sm tracking-wider uppercase">Muhurat</a>
+                <a href="#brands" class="text-white/80 hover:text-gold-400 transition-colors text-sm tracking-wider uppercase">Brands</a>
+                <a href="#about" class="text-white/80 hover:text-gold-400 transition-colors text-sm tracking-wider uppercase">Our Story</a>
+                <a href="#stores" class="text-white/80 hover:text-gold-400 transition-colors text-sm tracking-wider uppercase">Stores</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button class="text-white hover:text-gold-400 transition-colors" onclick="toggleSearch()">
+                    <i class="fas fa-search text-lg"></i>
+                </button>
+                <button class="text-white hover:text-gold-400 transition-colors relative">
+                    <i class="fas fa-shopping-bag text-lg"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-gold-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </button>
+                <button class="md:hidden text-white text-xl" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-stone-900/95 nav-blur mt-4 mx-4 rounded-2xl p-6">
+            <div class="flex flex-col gap-4">
+                <a href="#collections" class="text-white/80 hover:text-gold-400 py-2 border-b border-white/10">Collections</a>
+                <a href="#muhurat" class="text-white/80 hover:text-gold-400 py-2 border-b border-white/10">Muhurat</a>
+                <a href="#brands" class="text-white/80 hover:text-gold-400 py-2 border-b border-white/10">Brands</a>
+                <a href="#about" class="text-white/80 hover:text-gold-400 py-2 border-b border-white/10">Our Story</a>
+                <a href="#stores" class="text-white/80 hover:text-gold-400 py-2">Stores</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="fixed inset-0 bg-stone-900/95 z-50 hidden flex items-center justify-center">
+        <button onclick="toggleSearch()" class="absolute top-8 right-8 text-white text-3xl hover:text-gold-400">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="w-full max-w-2xl px-6">
+            <input type="text" placeholder="Search for gold, diamonds, collections..." 
+                   class="w-full bg-transparent border-b-2 border-gold-500 text-white text-2xl font-cormorant py-4 focus:outline-none placeholder-stone-500">
+            <div class="mt-8 flex flex-wrap gap-3">
+                <span class="text-stone-400 text-sm">Popular:</span>
+                <button class="text-gold-400 text-sm hover:underline">Bridal Sets</button>
+                <button class="text-gold-400 text-sm hover:underline">Diamond Rings</button>
+                <button class="text-gold-400 text-sm hover:underline">Gold Chains</button>
+                <button class="text-gold-400 text-sm hover:underline">Temple Jewelry</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-stone-50"></div>
+
+        <!-- Floating Particles -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-gold-400 rounded-full opacity-60 floating" style="animation-delay: 0s;"></div>
+            <div class="absolute top-1/3 right-1/3 w-3 h-3 bg-gold-300 rounded-full opacity-40 floating" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-1/4 left-1/2 w-2 h-2 bg-gold-500 rounded-full opacity-50 floating" style="animation-delay: 2s;"></div>
+            <div class="absolute top-2/3 right-1/4 w-4 h-4 bg-gold-200 rounded-full opacity-30 floating" style="animation-delay: 3s;"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+            <div class="mb-6 inline-block">
+                <span class="text-gold-400 tracking-[0.5em] text-sm uppercase font-medium">Est. 1993</span>
+            </div>
+            <h1 class="font-playfair text-5xl md:text-7xl lg:text-8xl text-white font-bold leading-tight mb-6">
+                Where Tradition<br>
+                <span class="text-gold-gradient italic">Meets Elegance</span>
+            </h1>
+            <p class="font-cormorant text-xl md:text-2xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Over 100 years of trust, crafting timeless pieces that celebrate life's precious moments
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="scrollToSection('collections')" class="gold-gradient px-10 py-4 text-stone-900 font-semibold tracking-wider hover:shadow-lg hover:shadow-gold-500/30 transition-all transform hover:-translate-y-1">
+                    EXPLORE COLLECTIONS
+                </button>
+                <button onclick="scrollToSection('muhurat')" class="border-2 border-gold-400 text-gold-400 px-10 py-4 font-semibold tracking-wider hover:bg-gold-400 hover:text-stone-900 transition-all">
+                    BOOK MUHURAT
+                </button>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60 animate-bounce">
+            <i class="fas fa-chevron-down text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="bg-stone-900 py-12 -mt-1">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="scroll-reveal">
+                <div class="text-4xl md:text-5xl font-playfair text-gold-400 mb-2 count-up" data-target="140">0</div>
+                <p class="text-stone-400 text-sm tracking-wider uppercase">Showrooms</p>
+            </div>
+            <div class="scroll-reveal" style="transition-delay: 0.1s">
+                <div class="text-4xl md:text-5xl font-playfair text-gold-400 mb-2 count-up" data-target="100">0</div>
+                <p class="text-stone-400 text-sm tracking-wider uppercase">Years Legacy</p>
+            </div>
+            <div class="scroll-reveal" style="transition-delay: 0.2s">
+                <div class="text-4xl md:text-5xl font-playfair text-gold-400 mb-2 count-up" data-target="10">0</div>
+                <p class="text-stone-400 text-sm tracking-wider uppercase">Exclusive Brands</p>
+            </div>
+            <div class="scroll-reveal" style="transition-delay: 0.3s">
+                <div class="text-4xl md:text-5xl font-playfair text-gold-400 mb-2 count-up" data-target="5">0</div>
+                <p class="text-stone-400 text-sm tracking-wider uppercase">Countries</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="bg-gold-500 py-3 overflow-hidden">
+        <div class="marquee-container">
+            <div class="marquee-content text-stone-900 font-semibold tracking-widest text-sm">
+                ✦ GOLD RATE TODAY: ₹6,245/gram 22K ✦ DIAMOND FESTIVAL - UP TO 20% OFF ✦ FREE INSURANCE ON ALL PURCHASES ✦ EXCHANGE OLD GOLD AT BEST PRICE ✦ GOLD RATE TODAY: ₹6,245/gram 22K ✦ DIAMOND FESTIVAL - UP TO 20% OFF ✦ FREE INSURANCE ON ALL PURCHASES ✦ EXCHANGE OLD GOLD AT BEST PRICE ✦
+            </div>
+        </div>
+    </div>
+
+    <!-- Collections Section -->
+    <section id="collections" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 scroll-reveal">
+                <span class="text-gold-600 tracking-[0.3em] text-xs uppercase font-semibold">Curated For You</span>
+                <h2 class="font-playfair text-4xl md:text-5xl text-stone-900 mt-3 mb-4">Our Collections</h2>
+                <div class="w-24 h-1 gold-gradient mx-auto"></div>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="flex justify-center gap-8 mb-12 flex-wrap scroll-reveal">
+                <button onclick="filterProducts('all')" class="collection-tab tab-active pb-2 text-stone-600 hover:text-gold-600 transition-colors text-sm tracking-wider uppercase" data-category="all">All</button>
+                <button onclick="filterProducts('bridal')" class="collection-tab pb-2 text-stone-600 hover:text-gold-600 transition-colors text-sm tracking-wider uppercase" data-category="bridal">Bridal</button>
+                <button onclick="filterProducts('gold')" class="collection-tab pb-2 text-stone-600 hover:text-gold-600 transition-colors text-sm tracking-wider uppercase" data-category="gold">Gold</button>
+                <button onclick="filterProducts('diamond')" class="collection-tab pb-2 text-stone-600 hover:text-gold-600 transition-colors text-sm tracking-wider uppercase" data-category="diamond">Diamond</button>
+                <button onclick="filterProducts('antique')" class="collection-tab pb-2 text-stone-600 hover:text-gold-600 transition-colors text-sm tracking-wider uppercase" data-category="antique">Antique</button>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Products will be populated by JS -->
+            </div>
+
+            <div class="text-center mt-12">
+                <button class="border-2 border-stone-800 text-stone-800 px-10 py-3 hover:bg-stone-800 hover:text-white transition-all tracking-wider text-sm">
+                    VIEW ALL COLLECTIONS
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Muhurat Section -->
+    <section id="muhurat" class="py-24 bg-stone-900 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0202128?w=1920&q=80'); background-size: cover; background-position: center;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="scroll-reveal">
+                    <span class="text-gold-400 tracking-[0.3em] text-xs uppercase font-semibold">Sacred Moments</span>
+                    <h2 class="font-playfair text-4xl md:text-5xl text-white mt-3 mb-6">The Muhurat Collection</h2>
+                    <p class="font-cormorant text-xl text-white/70 leading-relaxed mb-8">
+                        Weddings are a deep-rooted element of our society. At Kalyan Jewellers, we embrace the importance of every "Muhurat" — the auspicious time for celebration. Our wedding collections are crafted for every bride, from every part of India.
+                    </p>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gold-500/20 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-ring text-gold-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold mb-1">Bridal Sets</h4>
+                                <p class="text-white/60 text-sm">Complete wedding jewelry sets for the perfect bride</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gold-500/20 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-crown text-gold-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold mb-1">Temple Jewelry</h4>
+                                <p class="text-white/60 text-sm">Traditional designs inspired by ancient temples</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gold-500/20 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-heart text-gold-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold mb-1">Mangalsutra</h4>
+                                <p class="text-white/60 text-sm">Sacred symbols of marital bliss</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="gold-gradient px-8 py-3 text-stone-900 font-semibold tracking-wider hover:shadow-lg hover:shadow-gold-500/30 transition-all">
+                        BOOK CONSULTATION
+                    </button>
+                </div>
+
+                <div class="relative scroll-reveal">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-4 mt-8">
+                            <div class="rounded-2xl overflow-hidden h-64 product-card">
+                                <img src="https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?w=600&q=80" class="w-full h-full object-cover" alt="Bridal Jewelry">
+                            </div>
+                            <div class="rounded-2xl overflow-hidden h-48 product-card">
+                                <img src="https://images.unsplash.com/photo-1599643478518-17488fbbcd75?w=600&q=80" class="w-full h-full object-cover" alt="Gold Necklace">
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="rounded-2xl overflow-hidden h-48 product-card">
+                                <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=600&q=80" class="w-full h-full object-cover" alt="Diamond Set">
+                            </div>
+                            <div class="rounded-2xl overflow-hidden h-64 product-card">
+                                <img src="https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&q=80" class="w-full h-full object-cover" alt="Traditional Jewelry">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Decorative Element -->
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 border-2 border-gold-500/30 rounded-full"></div>
+                    <div class="absolute -top-6 -left-6 w-24 h-24 border-2 border-gold-500/20 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Family Section -->
+    <section id="brands" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 scroll-reveal">
+                <span class="text-gold-600 tracking-[0.3em] text-xs uppercase font-semibold">Our Portfolio</span>
+                <h2 class="font-playfair text-4xl md:text-5xl text-stone-900 mt-3 mb-4">Brands Family</h2>
+                <div class="w-24 h-1 gold-gradient mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-stone-600 font-cormorant text-lg">
+                    India's beauty lies in its diversity. Every part of India has its unique jewellery, and we bring you these subtle nuances through our various brands.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-stone-100 scroll-reveal">
+                    <div class="w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-gem text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-2xl text-stone-900 mb-3">Candere</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-4">Our official e-commerce store bringing Kalyan's legacy to your doorstep with modern designs.</p>
+                    <a href="#" class="text-gold-600 text-sm font-semibold hover:text-gold-700 flex items-center gap-2">
+                        Explore <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-stone-100 scroll-reveal" style="transition-delay: 0.1s">
+                    <div class="w-16 h-16 bg-gradient-to-br from-maroon-500 to-maroon-700 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-crown text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-2xl text-stone-900 mb-3">Mudhra</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-4">Heritage-inspired designs celebrating South Indian craftsmanship and temple artistry.</p>
+                    <a href="#" class="text-gold-600 text-sm font-semibold hover:text-gold-700 flex items-center gap-2">
+                        Explore <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-stone-100 scroll-reveal" style="transition-delay: 0.2s">
+                    <div class="w-16 h-16 bg-gradient-to-br from-stone-600 to-stone-800 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-ring text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-2xl text-stone-900 mb-3">Nimah</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-4">Contemporary designs for the modern woman who values tradition with a twist.</p>
+                    <a href="#" class="text-gold-600 text-sm font-semibold hover:text-gold-700 flex items-center gap-2">
+                        Explore <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-stone-100 scroll-reveal">
+                    <div class="w-16 h-16 bg-gradient-to-br from-amber-600 to-amber-800 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-sparkles text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-2xl text-stone-900 mb-3">Anokhi</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-4">Exclusive antique and vintage designs that tell stories of royal grandeur.</p>
+                    <a href="#" class="text-gold-600 text-sm font-semibold hover:text-gold-700 flex items-center gap-2">
+                        Explore <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-stone-100 scroll-reveal" style="transition-delay: 0.1s">
+                    <div class="w-16 h-16 bg-gradient-to-br from-rose-500 to-rose-700 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-heart text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-2xl text-stone-900 mb-3">Rang</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-4">Vibrant, colorful gemstone jewelry celebrating the diversity of Indian culture.</p>
+                    <a href="#" class="text-gold-600 text-sm font-semibold hover:text-gold-700 flex items-center gap-2">
+                        Explore <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-stone-100 scroll-reveal" style="transition-delay: 0.2s">
+                    <div class="w-16 h-16 bg-gradient-to-br from-slate-600 to-slate-800 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-star text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-2xl text-stone-900 mb-3">Tejasvi</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-4">Bridal couture jewelry designed for the most special day of your life.</p>
+                    <a href="#" class="text-gold-600 text-sm font-semibold hover:text-gold-700 flex items-center gap-2">
+                        Explore <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Story Section -->
+    <section id="about" class="py-24 bg-stone-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="relative scroll-reveal">
+                    <div class="rounded-3xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800&q=80" alt="Craftsmanship" class="w-full h-auto">
+                    </div>
+                    <div class="absolute -bottom-8 -right-8 bg-white p-6 rounded-2xl shadow-xl max-w-xs">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-12 h-12 bg-gold-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-award text-gold-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-stone-900">BIS Hallmarked</p>
+                                <p class="text-xs text-stone-500">100% Certified Gold</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scroll-reveal">
+                    <span class="text-gold-600 tracking-[0.3em] text-xs uppercase font-semibold">Our Heritage</span>
+                    <h2 class="font-playfair text-4xl md:text-5xl text-stone-900 mt-3 mb-6">A Legacy of Trust</h2>
+                    <div class="w-24 h-1 gold-gradient mb-8"></div>
+
+                    <p class="text-stone-600 leading-relaxed mb-6">
+                        We are one of the oldest business families in India with a family legacy of over 100 years in business. Started for the noble cause of nation-building and self-sustenance in a pre-independent India, our forefathers believed ethical, honest and transparent business practices should form the foundation of the group.
+                    </p>
+
+                    <p class="text-stone-600 leading-relaxed mb-8">
+                        Having ventured into jewellery retailing in 1993 in Thrissur, Kerala, we have grown to over 140 showrooms spread across India and GCC, bringing the finest craftsmanship from every corner of India to your doorstep.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div class="border-l-2 border-gold-400 pl-4">
+                            <h4 class="font-playfair text-xl text-stone-900 mb-1">Ethical</h4>
+                            <p class="text-stone-500 text-sm">Transparent pricing, pure gold</p>
+                        </div>
+                        <div class="border-l-2 border-gold-400 pl-4">
+                            <h4 class="font-playfair text-xl text-stone-900 mb-1">Artisanal</h4>
+                            <p class="text-stone-500 text-sm">Handcrafted by master craftsmen</p>
+                        </div>
+                    </div>
+
+                    <button class="bg-stone-900 text-white px-8 py-3 hover:bg-stone-800 transition-all tracking-wider text-sm">
+                        READ OUR STORY
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Store Locator -->
+    <section id="stores" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 scroll-reveal">
+                <span class="text-gold-600 tracking-[0.3em] text-xs uppercase font-semibold">Find Us</span>
+                <h2 class="font-playfair text-4xl md:text-5xl text-stone-900 mt-3 mb-4">Store Locator</h2>
+                <div class="w-24 h-1 gold-gradient mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-2xl p-6 shadow-lg border border-stone-100 scroll-reveal hover:shadow-xl transition-shadow cursor-pointer" onclick="highlightStore(this)">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 bg-gold-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-map-marker-alt text-gold-600"></i>
+                        </div>
+                        <span class="text-xs bg-gold-100 text-gold-700 px-3 py-1 rounded-full">Flagship</span>
+                    </div>
+                    <h3 class="font-playfair text-xl text-stone-900 mb-2">Thrissur, Kerala</h3>
+                    <p class="text-stone-500 text-sm mb-4">Headquarters & First Showroom<br>Round South, Thrissur</p>
+                    <div class="flex items-center gap-2 text-gold-600 text-sm">
+                        <i class="fas fa-phone text-xs"></i>
+                        <span>+91 487 242 0000</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-lg border border-stone-100 scroll-reveal hover:shadow-xl transition-shadow cursor-pointer" style="transition-delay: 0.1s" onclick="highlightStore(this)">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 bg-gold-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-map-marker-alt text-gold-600"></i>
+                        </div>
+                        <span class="text-xs bg-stone-100 text-stone-600 px-3 py-1 rounded-full">Metro</span>
+                    </div>
+                    <h3 class="font-playfair text-xl text-stone-900 mb-2">Mumbai, Maharashtra</h3>
+                    <p class="text-stone-500 text-sm mb-4">Bandra West, Linking Road<br>Near National College</p>
+                    <div class="flex items-center gap-2 text-gold-600 text-sm">
+                        <i class="fas fa-phone text-xs"></i>
+                        <span>+91 22 2642 0000</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-lg border border-stone-100 scroll-reveal hover:shadow-xl transition-shadow cursor-pointer" style="transition-delay: 0.2s" onclick="highlightStore(this)">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 bg-gold-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-map-marker-alt text-gold-600"></i>
+                        </div>
+                        <span class="text-xs bg-stone-100 text-stone-600 px-3 py-1 rounded-full">International</span>
+                    </div>
+                    <h3 class="font-playfair text-xl text-stone-900 mb-2">Dubai, UAE</h3>
+                    <p class="text-stone-500 text-sm mb-4">Gold Souk, Deira<br>Near Al Ras Metro Station</p>
+                    <div class="flex items-center gap-2 text-gold-600 text-sm">
+                        <i class="fas fa-phone text-xs"></i>
+                        <span>+971 4 295 0000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-stone-900 rounded-3xl p-8 md:p-12 text-center scroll-reveal">
+                <h3 class="font-playfair text-3xl text-white mb-4">Can't find a store nearby?</h3>
+                <p class="text-white/60 mb-8 max-w-xl mx-auto">Visit our official e-commerce store Candere and shop from the comfort of your home with free insured shipping.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="gold-gradient px-8 py-3 text-stone-900 font-semibold tracking-wider">
+                        VISIT CANDERE.COM
+                    </button>
+                    <button class="border border-white/30 text-white px-8 py-3 hover:bg-white/10 transition-all">
+                        DOWNLOAD APP
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-24 bg-gradient-to-br from-stone-900 to-stone-800 px-6">
+        <div class="max-w-4xl mx-auto text-center scroll-reveal">
+            <div class="w-16 h-16 bg-gold-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-envelope text-gold-400 text-2xl"></i>
+            </div>
+            <h2 class="font-playfair text-3xl md:text-4xl text-white mb-4">Join the Inner Circle</h2>
+            <p class="text-white/60 mb-8 max-w-xl mx-auto">Be the first to know about new collections, exclusive offers, and auspicious muhurat dates.</p>
+
+            <form onsubmit="handleSubscribe(event)" class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+                <input type="email" placeholder="Enter your email" required
+                       class="flex-1 bg-white/10 border border-white/20 rounded-lg px-6 py-3 text-white placeholder-white/40 focus:outline-none focus:border-gold-400">
+                <button type="submit" class="gold-gradient px-8 py-3 text-stone-900 font-semibold tracking-wider hover:shadow-lg hover:shadow-gold-500/30 transition-all">
+                    SUBSCRIBE
+                </button>
+            </form>
+
+            <div id="subscribe-message" class="mt-4 text-gold-400 hidden">
+                <i class="fas fa-check-circle mr-2"></i> Welcome to the Kalyan family!
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-950 text-white pt-16 pb-8 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-gem text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-playfair text-xl font-bold">KALYAN</h3>
+                            <p class="text-xs text-gold-400 tracking-widest">JEWELLERS</p>
+                        </div>
+                    </div>
+                    <p class="text-stone-400 text-sm leading-relaxed">
+                        Trusted by millions across India and GCC for over 100 years. Ethical, honest, and transparent.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-6 text-gold-400">Collections</h4>
+                    <ul class="space-y-3 text-sm text-stone-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Bridal Jewelry</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Gold Collection</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Diamond Jewelry</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Antique Designs</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Temple Jewelry</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-6 text-gold-400">Company</h4>
+                    <ul class="space-y-3 text-sm text-stone-400">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Our Story</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Press & Media</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-6 text-gold-400">Support</h4>
+                    <ul class="space-y-3 text-sm text-stone-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Store Locator</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Gold Rate</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Exchange Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-stone-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-stone-500 text-sm">© 2024 Kalyan Jewellers. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="text-stone-400 hover:text-gold-400 transition-colors"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-stone-400 hover:text-gold-400 transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-stone-400 hover:text-gold-400 transition-colors"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-stone-400 hover:text-gold-400 transition-colors"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="text-stone-400 hover:text-gold-400 transition-colors"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-stone-900/90 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 bg-stone-100 rounded-full flex items-center justify-center hover:bg-stone-200 transition-colors z-10">
+                <i class="fas fa-times text-stone-600"></i>
+            </button>
+            <div id="modal-content" class="grid md:grid-cols-2">
+                <!-- Content populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Product Data
+        const products = [
+            {
+                id: 1,
+                name: "Royal Bridal Set",
+                category: "bridal",
+                price: 245000,
+                image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?w=600&q=80",
+                description: "Exquisite 22K gold bridal set with intricate temple design, perfect for the modern Indian bride.",
+                weight: "45.5g",
+                purity: "22K 916"
+            },
+            {
+                id: 2,
+                name: "Diamond Solitaire Ring",
+                category: "diamond",
+                price: 185000,
+                image: "https://images.unsplash.com/photo-1605100804763-901f6cf5e63d?w=600&q=80",
+                description: "Certified VS1 clarity diamond set in 18K white gold. A timeless symbol of eternal love.",
+                weight: "3.2g",
+                purity: "18K Diamond"
+            },
+            {
+                id: 3,
+                name: "Heritage Gold Necklace",
+                category: "gold",
+                price: 89000,
+                image: "https://images.unsplash.com/photo-1599643478518-17488fbbcd75?w=600&q=80",
+                description: "Traditional South Indian design inspired by temple architecture, crafted by master artisans.",
+                weight: "28.5g",
+                purity: "22K 916"
+            },
+            {
+                id: 4,
+                name: "Antique Kundan Set",
+                category: "antique",
+                price: 320000,
+                image: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=600&q=80",
+                description: "Royal Mughal-inspired design with uncut diamonds and emerald accents in 24K gold foil.",
+                weight: "52.0g",
+                purity: "24K Kundan"
+            },
+            {
+                id: 5,
+                name: "Temple Jewelry Collection",
+                category: "bridal",
+                price: 156000,
+                image: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&q=80",
+                description: "Complete temple jewelry set featuring goddess Lakshmi motifs, ideal for classical dancers.",
+                weight: "38.0g",
+                purity: "22K 916"
+            },
+            {
+                id: 6,
+                name: "Contemporary Diamond Bangle",
+                category: "diamond",
+                price: 125000,
+                image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80",
+                description: "Modern open bangle design with pave-set diamonds, perfect for everyday luxury.",
+                weight: "12.5g",
+                purity: "18K Diamond"
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Remove loader
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                }, 700);
+            }, 1500);
+
+            // Render products
+            renderProducts('all');
+
+            // Setup scroll observer
+            setupScrollReveal();
+
+            // Setup cursor
+            setupCursor();
+
+            // Setup navbar scroll
+            setupNavbar();
+
+            // Setup count up
+            setupCountUp();
+        });
+
+        // Render Products
+        function renderProducts(category) {
+            const grid = document.getElementById('product-grid');
+            const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+
+            grid.innerHTML = filtered.map(product => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover product-card scroll-reveal" onclick="openProductModal(${product.id})">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-stone-800">
+                            ${product.purity}
+                        </div>
+                        <div class="product-overlay">
+                            <div class="text-white w-full">
+                                <p class="text-sm opacity-80 mb-1">${product.weight}</p>
+                                <button class="w-full bg-white/20 backdrop-blur border border-white/40 py-2 rounded-lg text-sm hover:bg-white/30 transition-colors">
+                                    Quick View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-playfair text-xl text-stone-900">${product.name}</h3>
+                            <span class="text-gold-600 font-semibold">₹${(product.price/1000).toFixed(0)}K</span>
+                        </div>
+                        <p class="text-stone-500 text-sm line-clamp-2">${product.description}</p>
+                        <div class="mt-4 flex gap-2">
+                            <button onclick="event.stopPropagation(); addToCart(${product.id})" class="flex-1 bg-stone-900 text-white py-2 rounded-lg text-sm hover:bg-stone-800 transition-colors">
+                                Add to Cart
+                            </button>
+                            <button class="w-10 h-10 border border-stone-200 rounded-lg flex items-center justify-center hover:border-gold-400 hover:text-gold-600 transition-colors">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Re-trigger scroll reveal for new elements
+            setTimeout(setupScrollReveal, 100);
+        }
+
+        // Filter Products
+        function filterProducts(category) {
+            // Update tabs
+            document.querySelectorAll('.collection-tab').forEach(tab => {
+                if (tab.dataset.category === category) {
+                    tab.classList.add('tab-active');
+                } else {
+                    tab.classList.remove('tab-active');
+                }
+            });
+
+            // Animate grid out
+            const grid = document.getElementById('product-grid');
+            grid.style.opacity = '0';
+            grid.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                renderProducts(category);
+                grid.style.transition = 'all 0.5s ease';
+                grid.style.opacity = '1';
+                grid.style.transform = 'translateY(0)';
+            }, 300);
+        }
+
+        // Product Modal
+        function openProductModal(id) {
+            const product = products.find(p => p.id === id);
+            const modal = document.getElementById('product-modal');
+            const content = document.getElementById('modal-content');
+
+            content.innerHTML = `
+                <div class="h-96 md:h-auto">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                </div>
+                <div class="p-8 md:p-12">
+                    <span class="text-gold-600 text-xs tracking-widest uppercase font-semibold">${product.purity}</span>
+                    <h2 class="font-playfair text-3xl text-stone-900 mt-2 mb-4">${product.name}</h2>
+                    <p class="text-stone-600 leading-relaxed mb-6">${product.description}</p>
+
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-stone-50 p-4 rounded-xl">
+                            <p class="text-xs text-stone-500 uppercase tracking-wider">Weight</p>
+                            <p class="font-semibold text-stone-900">${product.weight}</p>
+                        </div>
+                        <div class="bg-stone-50 p-4 rounded-xl">
+                            <p class="text-xs text-stone-500 uppercase tracking-wider">Purity</p>
+                            <p class="font-semibold text-stone-900">${product.purity}</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <p class="text-xs text-stone-500 uppercase tracking-wider">Price</p>
+                            <p class="font-playfair text-3xl text-stone-900">₹${product.price.toLocaleString()}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-green-600"><i class="fas fa-check-circle mr-1"></i>In Stock</p>
+                            <p class="text-xs text-stone-400">Free insured shipping</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button onclick="addToCart(${product.id}); closeModal();" class="flex-1 gold-gradient py-4 text-stone-900 font-semibold tracking-wider hover:shadow-lg hover:shadow-gold-500/30 transition-all">
+                            ADD TO CART
+                        </button>
+                        <button class="px-6 py-4 border-2 border-stone-200 rounded-lg hover:border-gold-400 hover:text-gold-600 transition-colors">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('product-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Cart
+        let cartCount = 0;
+        function addToCart(id) {
+            cartCount++;
+            document.getElementById('cart-count').textContent = cartCount;
+
+            // Animation
+            const badge = document.getElementById('cart-count');
+            badge.style.transform = 'scale(1.5)';
+            setTimeout(() => badge.style.transform = 'scale(1)', 200);
+        }
+
+        // Search
+        function toggleSearch() {
+            const overlay = document.getElementById('search-overlay');
+            if (overlay.classList.contains('hidden')) {
+                overlay.classList.remove('hidden');
+                overlay.querySelector('input').focus();
+            } else {
+                overlay.classList.add('hidden');
+            }
+        }
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Scroll to section
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Scroll Reveal
+        function setupScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        }
+
+        // Navbar scroll effect
+        function setupNavbar() {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-stone-900/95', 'nav-blur', 'shadow-lg');
+                    navbar.classList.remove('py-4');
+                    navbar.classList.add('py-2');
+                } else {
+                    navbar.classList.remove('bg-stone-900/95', 'nav-blur', 'shadow-lg', 'py-2');
+                    navbar.classList.add('py-4');
+                }
+            });
+        }
+
+        // Custom Cursor
+        function setupCursor() {
+            const cursor = document.getElementById('cursor');
+            if (window.matchMedia('(pointer: coarse)').matches) return;
+
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
+            });
+
+            document.querySelectorAll('a, button, .product-card').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'scale(2)';
+                    cursor.style.opacity = '0.3';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'scale(1)';
+                    cursor.style.opacity = '0.6';
+                });
+            });
+        }
+
+        // Count Up Animation
+        function setupCountUp() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.dataset.target);
+                        animateCount(entry.target, target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('.count-up').forEach(el => observer.observe(el));
+        }
+
+        function animateCount(element, target) {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + '+';
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + '+';
+                }
+            }, 30);
+        }
+
+        // Newsletter
+        function handleSubscribe(e) {
+            e.preventDefault();
+            const msg = document.getElementById('subscribe-message');
+            msg.classList.remove('hidden');
+            e.target.reset();
+            setTimeout(() => msg.classList.add('hidden'), 3000);
+        }
+
+        // Store highlight
+        function highlightStore(element) {
+            document.querySelectorAll('#stores .bg-white').forEach(el => {
+                el.classList.remove('ring-2', 'ring-gold-400');
+            });
+            element.classList.add('ring-2', 'ring-gold-400');
+        }
+
+        // Close modal on outside click
+        document.getElementById('product-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+
+        // Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.getElementById('search-overlay').classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
